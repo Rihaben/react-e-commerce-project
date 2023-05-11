@@ -1,0 +1,36 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: deployments 
+  labels:
+    app: react-ecommerce
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: react-ecommerce
+  template:
+    metadata:
+      labels:
+        app: react-ecommerce
+    spec:
+      containers:
+        - name: react-ecommerce 
+          image: rihabbennour/react-ecommerce
+          ports:
+            - containerPort: 3000 
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: services 
+spec:
+  selector:
+    app: react-app
+  type: LoadBalancer 
+  ports:
+    - protocol: TCP
+      port: 3000 
+      targetPort: 3000 
+      nodePort: 30020
